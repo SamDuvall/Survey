@@ -1,11 +1,10 @@
-<link rel="import" href="../google-spreadsheet-json/google-spreadsheet-json.html">
-<link rel="import" href="../rw-survey-rating/rw-survey-rating.html">
-<link rel="import" href="../rw-survey-question/rw-survey-question.html">
+<link rel="import" href="../../google/spreadsheet/spreadsheet.html">
+<link rel="import" href="ratings/ratings.html">
+<link rel="import" href="question/question.html">
 
 <polymer-element name="rw-survey">
   <template>
-    <google-spreadsheet-json key="0ApzJSyzpjJKZdEcxWTFzeEFONm8xTmt0Ml9hY0VwaXc" schema="{{schema}}" ratings="{{ratings}}" questions="{{questions}}" entries="{{entries}}"></google-spreadsheet-json>
-    <link rel="stylesheet" href="rw-survey.css">
+    <google-spreadsheet key="0ApzJSyzpjJKZdEcxWTFzeEFONm8xTmt0Ml9hY0VwaXc" schema="{{schema}}" ratings="{{ratings}}" questions="{{questions}}" entries="{{entries}}"></google-spreadsheet>
 
     <header>
       <h1>Survey</h1>
@@ -15,9 +14,7 @@
       Loading...
     </template>
 
-    <template repeat="{{rating, i in ratings}}">
-      <rw-survey-rating name="{{rating}}" index="{{i}}" entries="{{entries}}"></rw-survey-rating>
-    </template>
+    <rw-survey-ratings ratings="{{ratings}}" entries="{{entries}}"></rw-survey-ratings>
 
     <template repeat="{{question, i in questions}}">
       <rw-survey-question name="{{question}}" index="{{i}}" entries="{{entries}}"></rw-survey-question>

@@ -14,7 +14,9 @@
       <link rel="stylesheet" href="styles/main.css">
       <!-- Place your HTML imports here -->
       <link rel="import" href="bower_components/polymer/polymer.html"> 
-      <link rel="import" href="elements/rw-survey/rw-survey.html">
+      <link rel="import" href="elements/rw/survey/survey.html">
+
+      <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   </head>
   <body>
     <!-- build:js scripts/vendor.js -->
@@ -24,6 +26,9 @@
     <script src="bower_components/underscore/underscore.js"></script>
       
     <!-- endbuild -->
-    <rw-survey></rw-survey>
+
+    <div class="main container">
+      <rw-survey></rw-survey>
+    </div>
   </body>
 </html>

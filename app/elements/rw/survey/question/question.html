@@ -1,12 +1,17 @@
-<link rel="import" href="../google-spreadsheet-json/google-spreadsheet-json.html">
-
 <polymer-element name="rw-survey-question" attributes="name index entries">
   <template>
-    <h4>{{name}}</h4>
+    <h2>{{name}}</h2>
 
+    <div class="ui three column stackable grid">
     <template repeat="{{response in responses}}">
-      <div class="response">{{response}}</div>
+      <div class="column">
+        <div class="ui raised segment">
+          {{response}}
+        </div>
+      </div>
     </template>
+    </div>
+
   </template>
  <script>
     Polymer('rw-survey-question', {

@@ -1,0 +1,52 @@
+<polymer-element name="rw-survey-ratings-chart" attributes="ratings entries">
+  <template>
+    <div id="chart" class="chart"></div>
+  </template>
+  <script>
+    Polymer('rw-survey-ratings-chart', {
+      values: ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'],
+      entriesChanged: function() {
+        this.loadChart();
+      },
+      loadChart: function() {
+        window.google.load("visualization", "1", {
+          packages: ["corechart"],
+          callback: _.bind(this.drawChart, this)
+        });
+      },
+      drawChart: function() {
+        var keys = _.flatten(['Rating', _.map(this.values, function(title) {
+          return [title, {role: 'tooltip', p: {html: true}}];
+        }, this)]);
+
+        var ratings = _.map(this.ratings, function(rating, index) {
+          var values = _.map(this.values, function() { return 0; });
+          _.each(this.entries, function(entry) {
+            var value = _.indexOf(this.values, entry.ratings[index]);
+            values[value] = values[value] + 1;
+          }, this);
+
+          var name = 'Q' + (index + 1);
+          return _.flatten([name, _.map(values, function(value, index) {
+            var percentage = Math.round((value * 100) / this.entries.length);
+            var tooltip = value + ' ' + this.values[index] + ' (' + percentage + '%)';
+            return [value, tooltip];
+          }, this)]);
+        }, this);
+
+        var data = google.visualization.arrayToDataTable([keys].concat(ratings));
+
+        var options = {
+          animation: { duration: 1000 },
+          colors: ['#990000', '#cc3333', '#cccccc', '#33cc33', '#009900'],
+          legend: { position: 'top' },
+          bar: { groupWidth: '80%' },
+          isStacked: true
+        };
+
+        var chart = new google.visualization.BarChart(this.$.chart);
+        chart.draw(data, options);
+      }
+    });
+  </script>
+</polymer-element>
