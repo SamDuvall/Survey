@@ -1,0 +1,16 @@
+<link rel="import" href="chart.html">
+
+<polymer-element name="rw-survey-ratings" attributes="ratings entries">
+  <template>
+    <rw-survey-ratings-chart ratings="{{ratings}}" entries="{{entries}}"></rw-survey-ratings-chart>
+
+    <template repeat="{{rating in ratings}}">
+      <h4 class="rating">{{rating}}</h4>
+    </template>
+  </template>
+ <script>
+    Polymer('rw-survey-ratings', {
+
+    });
+  </script>
+</polymer-element>
