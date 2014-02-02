@@ -1,0 +1,41 @@
+<polymer-element name="rw-survey-questions" attributes="questions entries">
+  <template>
+    <template repeat="{{response in responses}}">
+      <h2>{{response.question}}</h2>
+
+      <div class="ui three column stackable grid">
+      <template repeat="{{quote in response.quotes}}">
+        <div class="column">
+          <div class="ui raised segment">
+            {{quote}}
+          </div>
+        </div>
+      </template>
+    </template>
+  </template>
+ <script>
+    Polymer('rw-survey-questions', {
+      entriesChanged: function() {
+        var questions = this.questions;
+        var entries = this.entries;
+
+        this.responses = _.chain(questions).map(function(question, index) {
+          var quotes = _.chain(entries).map(function(entry) {
+            return entry.questions[index];
+          }).filter(function(quote) {
+            if (!quote) return false;
+            quote = quote.toLowerCase().replace('.', '');
+            return quote.length && !_.include(['n/a', 'none'], quote);
+          }).value();
+
+          return {
+            question: question,
+            quotes: quotes
+          }
+        }).filter(function(response) {
+          return response.quotes.length;
+        }).value();
+      }
+    });
+  </script>
+</polymer-element>
