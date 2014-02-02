@@ -2,7 +2,7 @@
 
 <polymer-element name="rw-survey">
   <template>
-    <google-spreadsheet-json key="0ApzJSyzpjJKZdEcxWTFzeEFONm8xTmt0Ml9hY0VwaXc" columns="{{columns}}" entries="{{entries}}"></google-spreadsheet-json>
+    <google-spreadsheet-json key="0ApzJSyzpjJKZdEcxWTFzeEFONm8xTmt0Ml9hY0VwaXc" schema="{{schema}}" ratings="{{ratings}}" questions="{{questions}}" entries="{{entries}}"></google-spreadsheet-json>
     <link rel="stylesheet" href="rw-survey.css">
 
     <header>
@@ -13,10 +13,18 @@
       Loading...
     </template>
 
-    <template if="{{columns}}">
-    <ul class="columns">
-      <template repeat="{{column in columns}}">
-        <li class="column">{{column}}</li>
+    <template if="{{ratings}}">
+    <ul class="ratings">
+      <template repeat="{{rating in ratings}}">
+        <li class="rating">{{rating}}</li>
+      </template>
+    </ul>
+    </template>
+
+    <template if="{{questions}}">
+    <ul class="questions">
+      <template repeat="{{question in questions}}">
+        <li class="question">{{question}}</li>
       </template>
     </ul>
     </template>
@@ -24,7 +32,7 @@
     <template if="{{entries}}">
     <ul class="entries">
       <template repeat="{{entry in entries}}">
-        <li class="entry">{{entry[1]}}</li>
+        <li class="entry">{{entry.name}}</li>
       </template>
     </ul>
     </template>

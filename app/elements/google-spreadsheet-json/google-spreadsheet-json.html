@@ -1,12 +1,11 @@
 <link rel="import" href="../../bower_components/polymer-ajax/polymer-ajax.html">
 
-<polymer-element name="google-spreadsheet-json" attributes="key columns entries">
+<polymer-element name="google-spreadsheet-json" attributes="key schema ratings questions entries">
   <template>
     <polymer-ajax url="https://spreadsheets.google.com/feeds/cells/{{key}}/od6/public/values?alt=json" auto response="{{response}}"></polymer-ajax>
   </template>
  <script>
     Polymer('google-spreadsheet-json', {
-      entries: null,
       response: null,
       ready: function() {
 
@@ -24,18 +23,18 @@
         });
 
         // Determine survey size
-        var rows = _.max(cells, function(cell) {
+        var rowCount = _.max(cells, function(cell) {
           return cell.row;
         }).row;
-        var cols = _.max(cells, function(cell) {
+        var colCount = _.max(cells, function(cell) {
           return cell.col;
         }).col;
 
         // Populate the arrays
-        var columns = new Array(cols);
-        var entries = new Array(rows - 1);
-        for (var index = 0; index < rows - 1; ++index) {
-          entries[index] = new Array(cols);
+        var columns = new Array(colCount);
+        var rows = new Array(rowCount - 1);
+        for (var index = 0; index < rowCount - 1; ++index) {
+          rows[index] = new Array(colCount);
         }
 
         // Fill in the arrays
@@ -43,11 +42,45 @@
           if (cell.row == 1) {
             columns[cell.col - 1] = cell.value;
           } else {
-            entries[cell.row - 2][cell.col - 1] = cell.value;
+            rows[cell.row - 2][cell.col - 1] = cell.value;
           }
         }, this);
 
-        this.columns = columns;
+        // Create entries
+        var entries = _.map(rows, function(entry) {
+          var parsed = {
+            ratings: [],
+            questions: []
+          };
+          _.each(this.schema, function(key, index) {
+            if (key) parsed[key] = entry[index];
+          });
+          return parsed;
+        }, this);
+
+        // Pull out ratings & questions
+        var ratings = [];
+        var questions = [];
+        _.each(columns, function(column, col) {
+          if (col < this.schema.length) return;
+
+          var lastChar = column[column.length - 1];
+          if (lastChar == '.') {
+            ratings.push(column);
+            _.each(entries, function(entry, row) {
+              entry.ratings.push(rows[row][col]);
+            });
+          } else if (lastChar == '?') {
+            questions.push(column);
+            _.each(entries, function(entry, row) {
+              entry.questions.push(rows[row][col]);
+            });
+          }
+        }, this);
+
+        // Set values
+        this.ratings = ratings;
+        this.questions = questions;
         this.entries = entries;
       }
     });
