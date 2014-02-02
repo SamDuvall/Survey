@@ -1,11 +1,11 @@
-<link rel="import" href="../../bower_components/polymer-ajax/polymer-ajax.html">
+<link rel="import" href="../../../bower_components/polymer-ajax/polymer-ajax.html">
 
-<polymer-element name="google-spreadsheet-json" attributes="key schema ratings questions entries">
+<polymer-element name="google-spreadsheet" attributes="key schema ratings questions entries">
   <template>
     <polymer-ajax url="https://spreadsheets.google.com/feeds/cells/{{key}}/od6/public/values?alt=json" auto response="{{response}}"></polymer-ajax>
   </template>
  <script>
-    Polymer('google-spreadsheet-json', {
+    Polymer('google-spreadsheet', {
       response: null,
       ready: function() {
 
