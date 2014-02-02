@@ -1,16 +1,30 @@
 <link rel="import" href="../../../bower_components/polymer-ajax/polymer-ajax.html">
 
-<polymer-element name="google-spreadsheet" attributes="key schema ratings questions entries">
+<polymer-element name="google-spreadsheet" attributes="key schema ratings questions entries loading error">
   <template>
-    <polymer-ajax url="https://spreadsheets.google.com/feeds/cells/{{key}}/od6/public/values?alt=json" auto response="{{response}}"></polymer-ajax>
+    <polymer-ajax url="{{url}}" auto response="{{response}}" on-polymer-response="{{onData}}" on-polymer-error="{{onError}}"></polymer-ajax>
   </template>
  <script>
     Polymer('google-spreadsheet', {
+      loading: true,
+      error: null,
       response: null,
-      ready: function() {
-
+      questions: null,
+      ratings: null,
+      entries: null,
+      keyChanged: function() {
+        this.loading = true;
+        this.error = null;
+        this.url = "https://spreadsheets.google.com/feeds/cells/" + this.key + "/od6/public/values?alt=json"
       },
-      responseChanged: function() {
+      onError: function() {
+        this.loading = false;
+        this.error = "Error loading " + this.url;
+        this.questions = null;
+        this.ratings = null;
+        this.entries = null;
+      },
+      onData: function() {
         // Parse the JSON
         var json = JSON.parse(this.response);
         var cells = _.map(json.feed.entry, function(cell) {
@@ -79,6 +93,7 @@
         }, this);
 
         // Set values
+        this.loading = false;
         this.ratings = ratings;
         this.questions = questions;
         this.entries = entries;

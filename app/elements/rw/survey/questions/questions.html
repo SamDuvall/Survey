@@ -21,7 +21,13 @@
   </template>
  <script>
     Polymer('rw-survey-questions', {
+      questionsChanged: function() {
+        this.updateResponses();
+      },
       entriesChanged: function() {
+        this.updateResponses();
+      },
+      updateResponses: function() {
         var questions = this.questions;
         var entries = this.entries;
 

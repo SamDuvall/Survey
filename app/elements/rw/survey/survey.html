@@ -4,21 +4,48 @@
 
 <polymer-element name="rw-survey">
   <template>
-    <google-spreadsheet key="0ApzJSyzpjJKZdEcxWTFzeEFONm8xTmt0Ml9hY0VwaXc" schema="{{schema}}" ratings="{{ratings}}" questions="{{questions}}" entries="{{entries}}"></google-spreadsheet>
+    <link rel="stylesheet" href="survey.css">
 
-    <template if="{{entries == undefined}}">
+    <google-spreadsheet key="{{key}}" schema="{{schema}}" ratings="{{ratings}}" questions="{{questions}}" entries="{{entries}}" loading="{{loading}}" error="{{error}}"></google-spreadsheet>
+
+    <header>
       <div class="container">
-        Loading...
+        <div class="ui form">
+          <div class="ui left labeled icon input">
+            <input type="text" placeholder="Google Spreadsheet Key" value="{{key}}">
+            <i class="table icon"></i>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <template if="{{loading}}">
+      <div class="status container">
+        <div class="ui loading message">Loading...</div>
       </div>
     </template>
 
-    <template if="{{entries}}">
+    <template if="{{error}}">
+      <div class="status container">
+        <div class="ui error message">
+          <h1>Load Error</h1>
+          <p>{{error}}</p>
+          <p>Please ensure that google spreadsheet is <a href="https://support.google.com/drive/answer/37579?hl=en" target="_blank">published</a>.</p>
+        </div>
+      </div>
+    </template>
+
+    <template if="{{!loading && ratings && entries}}">
       <rw-survey-ratings ratings="{{ratings}}" entries="{{entries}}"></rw-survey-ratings>
+    </template>
+    
+    <template if="{{!loading && questions && entries}}">
       <rw-survey-questions questions="{{questions}}" entries="{{entries}}"></rw-survey-questions>
     </template>
   </template>
  <script>
     Polymer('rw-survey', {
+      key: '0ApzJSyzpjJKZdEcxWTFzeEFONm8xTmt0Ml9hY0VwaXc',
       response: null,
       schema: ['timestamp', 'name', null, 'grade'],
       ready: function() {

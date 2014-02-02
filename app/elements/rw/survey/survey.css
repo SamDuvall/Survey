@@ -1,0 +1,10 @@
+header {
+  padding: 20px 0;
+  background: rgba(0, 71, 126, .8);
+  border-top: 10px solid rgba(0, 71, 126, .9);
+  border-bottom: 10px solid rgba(0, 71, 126, .9);
+}
+
+.status {
+  margin-top: 20px;  
+}

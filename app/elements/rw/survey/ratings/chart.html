@@ -5,6 +5,9 @@
   <script>
     Polymer('rw-survey-ratings-chart', {
       values: ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'],
+      ratingsChanged: function() {
+        this.loadChart();
+      },
       entriesChanged: function() {
         this.loadChart();
       },
