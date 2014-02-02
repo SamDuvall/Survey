@@ -4,8 +4,8 @@
   <template>
     <rw-survey-ratings-chart ratings="{{ratings}}" entries="{{entries}}"></rw-survey-ratings-chart>
 
-    <template repeat="{{rating in ratings}}">
-      <h4 class="rating">{{rating}}</h4>
+    <template repeat="{{rating, i in ratings}}">
+      <h4 class="rating">Q{{i+1}}. {{rating}}</h4>
     </template>
   </template>
  <script>
