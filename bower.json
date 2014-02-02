@@ -1,0 +1,14 @@
+{
+  "name": "yt-jukebox",
+  "version": "0.0.3",
+  "dependencies": {
+    "platform": "Polymer/platform#master",
+    "polymer": "Polymer/polymer#~0.1.2",
+    "polymer-ui-tabs": "Polymer/polymer-ui-tabs#~0.1.2",
+    "polymer-ui-ratings": "Polymer/polymer-ui-ratings#~0.1.2",
+    "polymer-ajax": "Polymer/polymer-ajax#~0.1.2"
+  },
+  "resolutions": {
+    "platform": "0.1.2"
+  }
+}
