@@ -4,9 +4,15 @@
   <template>
     <rw-survey-ratings-chart ratings="{{ratings}}" entries="{{entries}}"></rw-survey-ratings-chart>
 
-    <template repeat="{{rating, i in ratings}}">
-      <h4 class="rating">Q{{i+1}}. {{rating}}</h4>
-    </template>
+    <div class="ui grid">
+        <div class="two wide column"></div>
+        <div class="twelve wide column">
+        <template repeat="{{rating, i in ratings}}">
+          <p class="rating"><strong>Q{{i+1}}.</strong> {{rating}}</p>
+        </template>
+        </div>
+        <div class="two wide column"></div>
+    </div>
   </template>
  <script>
     Polymer('rw-survey-ratings', {
