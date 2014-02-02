@@ -1,26 +1,30 @@
-<link rel="import" href="../../bower_components/polymer-ajax/polymer-ajax.html">
+<link rel="import" href="../google-spreadsheet-json/google-spreadsheet-json.html">
 
-<polymer-element name="rw-survey" attributes="animals">
+<polymer-element name="rw-survey">
   <template>
-    <polymer-ajax url="https://spreadsheets.google.com/feeds/list/0ApzJSyzpjJKZdEcxWTFzeEFONm8xTmt0Ml9hY0VwaXc/od6/public/values?alt=json" auto response="{{response}}"></polymer-ajax>
+    <google-spreadsheet-json key="0ApzJSyzpjJKZdEcxWTFzeEFONm8xTmt0Ml9hY0VwaXc" columns="{{columns}}" entries="{{entries}}"></google-spreadsheet-json>
     <link rel="stylesheet" href="rw-survey.css">
 
     <header>
       <h1>Survey</h1>
     </header>
 
-    <template if="{{animals == undefined}}">
+    <template if="{{entries == undefined}}">
       Loading...
     </template>
 
-    <template if="{{animals && !animals.length}}">
-      No Animals
+    <template if="{{columns}}">
+    <ul class="columns">
+      <template repeat="{{column in columns}}">
+        <li class="column">{{column}}</li>
+      </template>
+    </ul>
     </template>
 
-    <template if="{{animals && animals.length}}">
-    <ul class="animals">
-      <template repeat="{{animal in animals}}">
-        <li class="animal {{animal.type}}">{{animal.name}}</li>
+    <template if="{{entries}}">
+    <ul class="entries">
+      <template repeat="{{entry in entries}}">
+        <li class="entry">Entry</li>
       </template>
     </ul>
     </template>
@@ -28,13 +32,9 @@
  <script>
     Polymer('rw-survey', {
       response: null,
-      ready: function(){
+      schema: ['timestamp', 'name', null, 'filter', 'ranking', 'ranking', 'ranking', 'ranking', 'ranking', 'open-ended', 'open-ended', 'open-ended', 'open-ended'],
+      ready: function() {
 
-      },
-      responseChanged: function() {
-        debugger;
-        var json = JSON.parse(this.response)
-        this.animals = json.feed.entry;
       }
     });
   </script>

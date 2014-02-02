@@ -1,0 +1,50 @@
+<link rel="import" href="../../bower_components/polymer-ajax/polymer-ajax.html">
+
+<polymer-element name="google-spreadsheet-json" attributes="key columns entries">
+  <template>
+    <polymer-ajax url="https://spreadsheets.google.com/feeds/cells/{{key}}/od6/public/values?alt=json" auto response="{{response}}"></polymer-ajax>
+  </template>
+ <script>
+    Polymer('google-spreadsheet-json', {
+      entries: null,
+      response: null,
+      ready: function() {
+
+      },
+      responseChanged: function() {
+        var json = JSON.parse(this.response);
+        var cells = _.map(json.feed.entry, function(cell) {
+          var value = cell['gs$cell'];
+          return {
+            row: parseInt(value.row, 10),
+            col: parseInt(value.col, 10),
+            value: value.$t.trim()
+          }
+        });
+        var rows = _.max(cells, function(cell) {
+          return cell.row;
+        }).row;
+        var cols = _.max(cells, function(cell) {
+          return cell.col;
+        }).col;
+
+        var columns = new Array(cols);
+        var entries = new Array(rows - 1);
+        for (var index = 0; index < rows - 1; ++index) {
+          entries[index] = new Array(cols);
+        }
+
+        _.each(cells, function(cell) {
+          if (cell.row == 1) {
+            columns[cell.col - 1] = cell.value;
+          } else {
+            entries[cell.row - 2][cell.col - 1] = cell.value;
+          }
+        }, this);
+
+        this.columns = columns;
+        this.entries = entries;
+      }
+    });
+  </script>
+</polymer-element>
