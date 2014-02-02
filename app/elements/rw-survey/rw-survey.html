@@ -1,15 +1,23 @@
-<polymer-element name="rw-survey" attributes="">
+<link rel="import" href="../../bower_components/polymer-ajax/polymer-ajax.html">
+
+<polymer-element name="rw-survey" attributes="animals">
   <template>
+    <polymer-ajax url="http://ourpetri.com/animals.json" auto response="{{response}}"></polymer-ajax>
     <link rel="stylesheet" href="rw-survey.css">
 
     <header>
       <h1>Survey</h1>
+      {{resp}}
     </header>
   </template>
  <script>
     Polymer('rw-survey', {
+      response: null,
       ready: function(){
-        console.log('ready');
+
+      },
+      responseChanged: function() {
+        this.animals = this.response;
       }
     });
   </script>
