@@ -1,8 +1,8 @@
 <polymer-element name="rw-survey-ratings-chart" attributes="ratings entries">
   <template>
-    <div id="chart" style="width: 900px; height: 500px;"></div>
+    <div id="chart" class="chart"></div>
   </template>
- <script>
+  <script>
     Polymer('rw-survey-ratings-chart', {
       values: ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'],
       entriesChanged: function() {
@@ -44,7 +44,7 @@
           isStacked: true
         };
 
-        var chart = new google.visualization.BarChart(document.getElementById('chart'));
+        var chart = new google.visualization.BarChart(this.$.chart);
         chart.draw(data, options);
       }
     });
