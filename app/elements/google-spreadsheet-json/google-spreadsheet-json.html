@@ -12,6 +12,7 @@
 
       },
       responseChanged: function() {
+        // Parse the JSON
         var json = JSON.parse(this.response);
         var cells = _.map(json.feed.entry, function(cell) {
           var value = cell['gs$cell'];
@@ -21,6 +22,8 @@
             value: value.$t.trim()
           }
         });
+
+        // Determine survey size
         var rows = _.max(cells, function(cell) {
           return cell.row;
         }).row;
@@ -28,12 +31,14 @@
           return cell.col;
         }).col;
 
+        // Populate the arrays
         var columns = new Array(cols);
         var entries = new Array(rows - 1);
         for (var index = 0; index < rows - 1; ++index) {
           entries[index] = new Array(cols);
         }
 
+        // Fill in the arrays
         _.each(cells, function(cell) {
           if (cell.row == 1) {
             columns[cell.col - 1] = cell.value;

@@ -24,7 +24,7 @@
     <template if="{{entries}}">
     <ul class="entries">
       <template repeat="{{entry in entries}}">
-        <li class="entry">Entry</li>
+        <li class="entry">{{entry[1]}}</li>
       </template>
     </ul>
     </template>
@@ -32,7 +32,7 @@
  <script>
     Polymer('rw-survey', {
       response: null,
-      schema: ['timestamp', 'name', null, 'filter', 'ranking', 'ranking', 'ranking', 'ranking', 'ranking', 'open-ended', 'open-ended', 'open-ended', 'open-ended'],
+      schema: ['timestamp', 'name', null, 'grade'],
       ready: function() {
 
       }
