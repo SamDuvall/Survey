@@ -1,4 +1,6 @@
 <link rel="import" href="../google-spreadsheet-json/google-spreadsheet-json.html">
+<link rel="import" href="../rw-survey-rating/rw-survey-rating.html">
+<link rel="import" href="../rw-survey-question/rw-survey-question.html">
 
 <polymer-element name="rw-survey">
   <template>
@@ -13,28 +15,12 @@
       Loading...
     </template>
 
-    <template if="{{ratings}}">
-    <ul class="ratings">
-      <template repeat="{{rating in ratings}}">
-        <li class="rating">{{rating}}</li>
-      </template>
-    </ul>
+    <template repeat="{{rating, i in ratings}}">
+      <rw-survey-rating name="{{rating}}" index="{{i}}" entries="{{entries}}"></rw-survey-rating>
     </template>
 
-    <template if="{{questions}}">
-    <ul class="questions">
-      <template repeat="{{question in questions}}">
-        <li class="question">{{question}}</li>
-      </template>
-    </ul>
-    </template>
-
-    <template if="{{entries}}">
-    <ul class="entries">
-      <template repeat="{{entry in entries}}">
-        <li class="entry">{{entry.name}}</li>
-      </template>
-    </ul>
+    <template repeat="{{question, i in questions}}">
+      <rw-survey-question name="{{question}}" index="{{i}}" entries="{{entries}}"></rw-survey-question>
     </template>
   </template>
  <script>

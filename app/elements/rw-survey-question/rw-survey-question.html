@@ -1,0 +1,21 @@
+<link rel="import" href="../google-spreadsheet-json/google-spreadsheet-json.html">
+
+<polymer-element name="rw-survey-question" attributes="name index entries">
+  <template>
+    <h4>{{name}}</h4>
+
+    <template repeat="{{response in responses}}">
+      <div class="response">{{response}}</div>
+    </template>
+  </template>
+ <script>
+    Polymer('rw-survey-question', {
+      entriesChanged: function() {
+        var responses = _.map(this.entries, function(entry) {
+          return entry.questions[this.index];
+        }, this);
+        this.responses = _.uniq(responses);
+      }
+    });
+  </script>
+</polymer-element>
