@@ -6,12 +6,10 @@
   <template>
     <google-spreadsheet key="0ApzJSyzpjJKZdEcxWTFzeEFONm8xTmt0Ml9hY0VwaXc" schema="{{schema}}" ratings="{{ratings}}" questions="{{questions}}" entries="{{entries}}"></google-spreadsheet>
 
-    <header>
-      <h1>Survey</h1>
-    </header>
-
     <template if="{{entries == undefined}}">
-      Loading...
+      <div class="container">
+        Loading...
+      </div>
     </template>
 
     <template if="{{entries}}">

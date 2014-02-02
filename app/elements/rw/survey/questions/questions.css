@@ -1,0 +1,25 @@
+.question {
+  padding: 10px 0;
+}
+
+.question.question-even {
+  background: rgba(0, 71, 126, .8);
+  border-top: 10px solid rgba(0, 71, 126, .9);
+  border-bottom: 10px solid rgba(0, 71, 126, .9);
+}
+
+.question.question-even .heading {
+  color: white;
+  text-shadow: 2px 2px 1px #333333;
+}
+
+.question.question-odd {
+  background: rgba(225, 155, 15, .8);
+  border-top: 10px solid rgba(225, 155, 15, .9);
+  border-bottom: 10px solid rgba(225, 155, 15, .9);
+}
+
+.question.question-odd .heading {
+  color: white;
+  text-shadow: 2px 2px 1px #333333;
+}

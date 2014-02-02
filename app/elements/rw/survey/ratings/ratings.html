@@ -2,19 +2,27 @@
 
 <polymer-element name="rw-survey-ratings" attributes="ratings entries">
   <template>
-    <rw-survey-ratings-chart ratings="{{ratings}}" entries="{{entries}}"></rw-survey-ratings-chart>
+    <link rel="stylesheet" href="ratings.css">
 
-    <div class="ui grid">
-      <div class="two wide column"></div>
-      <div class="twelve wide column">
-        <div class="ui piled segment">
-          <h3>Questions</h3>
-          <template repeat="{{rating, i in ratings}}">
-            <p class="rating"><strong>Q{{i+1}}.</strong> {{rating}}</p>
-          </template>
+    <div class="ratings">
+      <div class="container">
+        <h1 class="ui center aligned header">Survey Results</h1>
+
+        <rw-survey-ratings-chart ratings="{{ratings}}" entries="{{entries}}"></rw-survey-ratings-chart>
+
+        <div class="ui grid">
+          <div class="two wide column"></div>
+          <div class="twelve wide column">
+            <div class="ui piled segment">
+              <h3>Questions</h3>
+              <template repeat="{{rating, i in ratings}}">
+                <p class="rating"><strong>Q{{i+1}}.</strong> {{rating}}</p>
+              </template>
+            </div>
+          </div>
+          <div class="two wide column"></div>
         </div>
       </div>
-      <div class="two wide column"></div>
     </div>
   </template>
  <script>

@@ -1,16 +1,22 @@
 <polymer-element name="rw-survey-questions" attributes="questions entries">
   <template>
-    <template repeat="{{response in responses}}">
-      <h2>{{response.question}}</h2>
+    <link rel="stylesheet" href="questions.css">
 
-      <div class="ui three column stackable grid">
-      <template repeat="{{quote in response.quotes}}">
-        <div class="column">
-          <div class="ui raised segment">
-            {{quote}}
-          </div>
+    <template repeat="{{response, i in responses}}">
+      <div class="question question-{{i % 2 == 0 ? 'even' : 'odd'}}">
+        <div class="container">
+          <h2 class="ui heading">{{response.question}}</h2>
+
+          <div class="ui three column stackable grid">
+          <template repeat="{{quote in response.quotes}}">
+            <div class="column">
+              <div class="ui raised segment">
+                {{quote}}
+              </div>
+            </div>
+          </template>
         </div>
-      </template>
+      </div>
     </template>
   </template>
  <script>
